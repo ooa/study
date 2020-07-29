@@ -1,4 +1,4 @@
-package com.github.ooa.chudq.mqtest;
+package com.github.ooa.chudq.mq;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,20 +17,20 @@ import org.slf4j.LoggerFactory;
 public class Producer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);
 
-    //ActiveMq µÄÄ¬ÈÏÓÃ»§Ãû
+    //ActiveMq çš„é»˜è®¤ç”¨æˆ·å
     private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;
-    //ActiveMq µÄÄ¬ÈÏµÇÂ¼ÃÜÂë
+    //ActiveMq çš„é»˜è®¤ç™»å½•å¯†ç 
     private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;
-    //ActiveMQ µÄÁ´½ÓµØÖ·
+    //ActiveMQ çš„é“¾æ¥åœ°å€
     private static final String ACITVEMQ_URL = ActiveMQConnection.DEFAULT_ACITVEMQ_URL;
     
     AtomicInteger count = new AtomicInteger(0);
     
-    //Á´½Ó¹¤³§
+    //é“¾æ¥å·¥å‚
     ConnectionFactory connectionFactory;
-    //Á´½Ó¶ÔÏó
+    //é“¾æ¥å¯¹è±¡
     Connection connection;
-    //ÊÂÎñ¹ÜÀí
+    //äº‹åŠ¡ç®¡ç†
     Session session;
     
     ThreadLocal<MessageProducer> threadLocal = new ThreadLocal<>();
@@ -38,13 +38,13 @@ public class Producer {
 	public void init(){
 		LOGGER.info("Product init");
 		try {
-			//´´½¨Ò»¸öÁ´½Ó¹¤³§
+			//åˆ›å»ºä¸€ä¸ªé“¾æ¥å·¥å‚
 	        connectionFactory = new ActiveMQConnectionFactory(USERNAME, PASSWORD, ACITVEMQ_URL);
-	        //´Ó¹¤³§ÖĞ´´½¨Ò»¸öÁ´½Ó
+	        //ä»å·¥å‚ä¸­åˆ›å»ºä¸€ä¸ªé“¾æ¥
 	        connection = connectionFactory.createConnection();
-	        //¿ªÆôÁ´½Ó
+	        //å¼€å¯é“¾æ¥
 	        connection.start();
-	        //´´½¨Ò»¸öÊÂÎñ£¨ÕâÀïÍ¨¹ı²ÎÊı¿ÉÒÔÉèÖÃÊÂÎñµÄ¼¶±ğ£©
+	        //åˆ›å»ºä¸€ä¸ªäº‹åŠ¡ï¼ˆè¿™é‡Œé€šè¿‡å‚æ•°å¯ä»¥è®¾ç½®äº‹åŠ¡çš„çº§åˆ«ï¼‰
 	        session = connection.createSession(true, Session.SESSION_TRANSACTED);
 		} catch (JMSException e) {
 			LOGGER.error("", e);
@@ -53,9 +53,9 @@ public class Producer {
 	
 	public void sendMessage(String disname){
 		try{
-            //´´½¨Ò»¸öÏûÏ¢¶ÓÁĞ
+			//åˆ›å»ºä¸€ä¸ªæ¶ˆæ¯é˜Ÿåˆ—
             Queue queue = session.createQueue(disname);
-            //ÏûÏ¢Éú²úÕß
+            //æ¶ˆæ¯ç”Ÿäº§è€…
             MessageProducer messageProducer = null;
             if (threadLocal.get() != null){
                 messageProducer = threadLocal.get();
@@ -63,23 +63,30 @@ public class Producer {
                 messageProducer = session.createProducer(queue);
                 threadLocal.set(messageProducer);
             }
-
+            
             while (true){
                 Thread.sleep(1000);
                 int num = count.getAndIncrement();
-                //´´½¨Ò»ÌõÏûÏ¢
+                //åˆ›å»ºä¸€æ¡æ¶ˆæ¯
                 TextMessage msg;
-                msg = session.createTextMessage(Thread.currentThread().getName() + "==Productor:ÎÒÏÖÔÚÕıÔÚÉú²ú¶«Î÷£¡,count:" + num);
+                msg = session.createTextMessage(Thread.currentThread().getName() + "==Productor:æˆ‘ç°åœ¨æ­£åœ¨ç”Ÿäº§ä¸œè¥¿ï¼,count:" + num);
                 LOGGER.info("msg:{} + {}", msg, num);
-                //·¢ËÍÏûÏ¢
+                //å‘é€æ¶ˆæ¯
                 messageProducer.send(msg);
-                //Ìá½»ÊÂÎñ
+                //æäº¤äº‹åŠ¡
                 session.commit();
+                System.out.println(num);
             }
         }catch (JMSException e){
             LOGGER.error("", e);
         }catch (InterruptedException e){
             LOGGER.error("", e);
         }
+	}
+	
+	public static void main(String[] args) {
+		Producer producer = new Producer();
+		producer.init();
+		producer.sendMessage("My-Queue");
 	}
 }

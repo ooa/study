@@ -101,7 +101,7 @@ public class HttpUtils {
 	        while ((inputLine = in.readLine()) != null) { response.append(inputLine); }
 	        in.close();
 
-	        result = response.toString();
+	        result = new String(response.toString().getBytes(),"UTf-8");
 
 	        // disconnect
 	        connection.disconnect();
