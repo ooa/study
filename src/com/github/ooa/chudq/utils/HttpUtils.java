@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,14 +25,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 
 public class HttpUtils {
 	/**
 	 * @description 
-	 * 单例模式下，HttpClient的响应速度要更快一些，单位为毫秒，性能差异相差不大
+	 * 鍗曚緥妯″紡涓嬶紝HttpClient鐨勫搷搴旈�熷害瑕佹洿蹇竴浜涳紝鍗曚綅涓烘绉掞紝鎬ц兘宸紓鐩稿樊涓嶅ぇ
 	 * org.apache.httpcomponents.httpclient-4.5.2.jar
 	 * @param param
 	 * @return
@@ -47,7 +47,7 @@ public class HttpUtils {
 		    	Map.Entry<?, ?> map = (Entry<?, ?>) iterator.next();
 		    	params.add(new BasicNameValuePair(map.getKey().toString(), map.getValue().toString()));
 		    }
-	      post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+	      post.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 	      HttpResponse response = client.execute(post);
 	      res = EntityUtils.toString(response.getEntity());
 	    } catch (UnsupportedEncodingException e) {
@@ -61,7 +61,7 @@ public class HttpUtils {
 	}; 
 	
 	/**
-	 * @description 非单例模式下，OkHttp的性能更好，HttpClient创建连接比较耗时，因为多数情况下这些资源都会写成单例模式
+	 * @description 闈炲崟渚嬫ā寮忎笅锛孫kHttp鐨勬�ц兘鏇村ソ锛孒ttpClient鍒涘缓杩炴帴姣旇緝鑰楁椂锛屽洜涓哄鏁版儏鍐典笅杩欎簺璧勬簮閮戒細鍐欐垚鍗曚緥妯″紡
 	 * @param param
 	 * @return
 	 */
@@ -71,7 +71,7 @@ public class HttpUtils {
 	}; 
 	
 	/**
-	 * @description JDK 自带的HttpURLConnection
+	 * @description JDK 鑷甫鐨凥ttpURLConnection
 	 * @param param
 	 * @return
 	 */
@@ -84,7 +84,7 @@ public class HttpUtils {
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
 			OutputStream outputStream = connection.getOutputStream();
-		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 		    Iterator<?> iterator = param.entrySet().iterator();
 		    while(iterator.hasNext()){
 		    	Map.Entry<?, ?> map = (Entry<?, ?>) iterator.next();
@@ -101,7 +101,7 @@ public class HttpUtils {
 	        while ((inputLine = in.readLine()) != null) { response.append(inputLine); }
 	        in.close();
 
-	        result = new String(response.toString().getBytes(),"UTf-8");
+	        result = new String(response.toString().getBytes(), StandardCharsets.UTF_8);
 
 	        // disconnect
 	        connection.disconnect();

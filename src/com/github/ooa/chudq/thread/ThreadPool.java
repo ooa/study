@@ -1,8 +1,10 @@
-package com.github.ooa.chudq;
+package com.github.ooa.chudq.thread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import com.github.ooa.chudq.MyTask;
 
 /**
  * @description 线程池应用
