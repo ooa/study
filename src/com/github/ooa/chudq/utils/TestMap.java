@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-public class UnitMap {
+public class TestMap {
 	
 	@Test
 	public void testMap(){
