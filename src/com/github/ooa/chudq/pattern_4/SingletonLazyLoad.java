@@ -1,7 +1,7 @@
-package com.github.ooa.chudq.singleton;
+package com.github.ooa.chudq.pattern_4;
 
 /**
- * @description 登记式/静态内部类
+ * @description 登记�?/静�?�内部类
  * @author Covet
  *
  */
@@ -21,6 +21,6 @@ public class SingletonLazyLoad {
 	
 	@Override
 	public String toString(){
-		return "使用静态内部类的方式实现单例模式";
+		return "使用静�?�内部类的方式实现单例模�?";
 	}
 }

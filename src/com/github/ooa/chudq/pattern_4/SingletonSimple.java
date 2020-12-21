@@ -1,4 +1,4 @@
-package com.github.ooa.chudq.singleton;
+package com.github.ooa.chudq.pattern_4;
 
 public class SingletonSimple {
 	
@@ -15,7 +15,7 @@ public class SingletonSimple {
 	@Override
 	public String toString(){
 		return "饿汉式，单例模式\n"+
-				"优点：没有加锁，执行效率会提高。\n"+
-				"缺点：类加载时就初始化，浪费内存。";
+				"优点：没有加锁，执行效率会提高�?�\n"+
+				"缺点：类加载时就初始化，浪费内存�?";
 	}
 }

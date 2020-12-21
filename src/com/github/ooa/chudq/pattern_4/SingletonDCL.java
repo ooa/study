@@ -1,4 +1,4 @@
-package com.github.ooa.chudq.singleton;
+package com.github.ooa.chudq.pattern_4;
 
 /**
  * double-checked locking
@@ -26,7 +26,7 @@ public class SingletonDCL {
 	
 	@Override
 	public String toString(){
-		return "双检锁/双重校验锁，单例模式\n"+
+		return "双检�?/双重校验锁，单例模式\n"+
 				"优点：采用双锁机制，安全且在多线程情况下能保持高性能";
 	}
 }
