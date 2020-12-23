@@ -1,4 +1,4 @@
-package com.github.ooa.chudq.pattern_1;
+package com.github.ooa.study.pattern.simple_factory;
 
 public class Test {
 
@@ -7,10 +7,10 @@ public class Test {
 		cal.numbA=4;
 		cal.numbB=6;
 		System.out.println(cal.getResult());
-		Calculator minus = Factory.createOperate("-");
-		minus.numbA=19;
-		minus.numbB=4;
-		System.out.println(minus.getResult());;
+		cal = Factory.createOperate("-");
+		cal.numbA=19;
+		cal.numbB=4;
+		System.out.println(cal.getResult());;
 	}
 
 }

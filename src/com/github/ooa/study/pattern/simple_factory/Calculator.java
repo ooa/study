@@ -1,4 +1,4 @@
-package com.github.ooa.chudq.pattern_1;
+package com.github.ooa.study.pattern.simple_factory;
 
 public abstract class Calculator {
 	public int numbA;

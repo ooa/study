@@ -1,7 +1,7 @@
-package com.github.ooa.chudq.pattern_1;
+package com.github.ooa.study.pattern.simple_factory;
 
 /**
- * @description 简单工厂模式(静态工厂)
+ * @description
  * @author Covet
  */
 public class Factory{
@@ -12,7 +12,7 @@ public class Factory{
 		}else if(operator.equals("-")) {
 			return new Minus();
 		}else {
-			System.out.println("暂时不支持:"+operator+"运算");
+			System.out.println("unknow:"+operator);
 			return null;
 		}
 	}
