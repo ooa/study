@@ -1,5 +1,7 @@
 package com.github.ooa.study.pattern.builder;
 
+import com.github.ooa.study.pattern.builder.Meal.Meal;
+import com.github.ooa.study.pattern.builder.Meal.MealBuilder;
 import com.github.ooa.study.pattern.builder.entity.Person;
 
 /**
@@ -15,5 +17,9 @@ public class Test {
         personBuilder.setCar("Ben");
         Person person = personBuilder.build();
         System.out.println(person.toString());
+
+        MealBuilder mealBuilder = new MealBuilder();
+        Meal meal = mealBuilder.prepareVegMeal();
+        meal.showItems();
     }
 }
